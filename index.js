@@ -9,7 +9,7 @@ const server = http.createServer(app);
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://doubtell-main.netlify.app/",
   })
 );
 
@@ -23,7 +23,9 @@ app.get("/", (req, res) => {
   res.send("This is home route of socket server");
 });
 
-const io = socketIo(server, { cors: { origin: "http://localhost:3000" } });
+const io = socketIo(server, {
+  cors: { origin: "https://doubtell-main.netlify.app/" },
+});
 
 let usersConnected = [];
 
