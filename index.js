@@ -1,9 +1,29 @@
 require("dotenv").config();
-const io = require("socket.io")(process.env.PORT || 8900, {
-  cors: {
+const http = require("http");
+const socketIo = require("socket.io");
+const cors = require("cors");
+const app = require("express")();
+
+const PORT = process.env.PORT || 8900;
+const server = http.createServer(app);
+
+app.use(
+  cors({
     origin: "http://localhost:3000",
-  },
+  })
+);
+
+// const io = require("socket.io")(process.env.PORT || 8900, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//   },
+// });
+
+app.get("/", (req, res) => {
+  console.log("this is home route of socket server");
 });
+
+const io = socketIo(server, { cors: { origin: "http://localhost:3000" } });
 
 let usersConnected = [];
 
@@ -48,4 +68,8 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
     removeUser(socket.id);
   });
+});
+
+server.listen(PORT, () => {
+  console.log("Socket server started!");
 });
