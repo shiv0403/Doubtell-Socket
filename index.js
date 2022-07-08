@@ -20,7 +20,7 @@ app.use(
 // });
 
 app.get("/", (req, res) => {
-  console.log("this is home route of socket server");
+  res.send("This is home route of socket server");
 });
 
 const io = socketIo(server, { cors: { origin: "http://localhost:3000" } });
